@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from nemo_text_processing.inverse_text_normalization.taggers.ambiguity import AmbiguityFst
 from nemo_text_processing.inverse_text_normalization.taggers.cardinal import CardinalFst
 from nemo_text_processing.inverse_text_normalization.taggers.fraction import FractionFst
 from nemo_text_processing.inverse_text_normalization.taggers.date import DateFst
@@ -22,6 +22,7 @@ from nemo_text_processing.inverse_text_normalization.taggers.measure import Meas
 from nemo_text_processing.inverse_text_normalization.taggers.money import MoneyFst
 from nemo_text_processing.inverse_text_normalization.taggers.ordinal import OrdinalFst
 from nemo_text_processing.inverse_text_normalization.taggers.punctuation import PunctuationFst
+from nemo_text_processing.inverse_text_normalization.taggers.sequence import SequenceFst
 from nemo_text_processing.inverse_text_normalization.taggers.telephone import TelephoneFst
 from nemo_text_processing.inverse_text_normalization.taggers.time import TimeFst
 from nemo_text_processing.inverse_text_normalization.taggers.whitelist import WhiteListFst
@@ -52,6 +53,9 @@ class ClassifyFst(GraphFst):
         cardinal = CardinalFst()
         cardinal_graph = cardinal.fst
 
+        ambiguity = AmbiguityFst()
+        ambiguity_graph = ambiguity.fst
+
         # ordinal = OrdinalFst(cardinal)
         # ordinal_graph = ordinal.fst
 
@@ -69,10 +73,13 @@ class ClassifyFst(GraphFst):
         # telephone_graph = TelephoneFst().fst
         consec_num = ConsecutiveNumberFst()
         consec_num_graph = consec_num.fst
+        sequence = SequenceFst()
+        sequence_graph = sequence.fst
         date_graph = DateFst(cardinal=cardinal, consec_num=consec_num).fst
 
         classify = (
             pynutil.add_weight(whitelist_graph, 1.01)
+            | pynutil.add_weight(ambiguity_graph, 1.01)
             | pynutil.add_weight(fraction_graph, 1.1)
             | pynutil.add_weight(time_graph, 1.1)
             | pynutil.add_weight(date_graph, 1.09)
@@ -84,6 +91,7 @@ class ClassifyFst(GraphFst):
         #     | pynutil.add_weight(telephone_graph, 1.1)
         #     | pynutil.add_weight(electronic_graph, 1.1)
             | pynutil.add_weight(consec_num_graph, 1.11)
+            | pynutil.add_weight(sequence_graph, 1.11)
             | pynutil.add_weight(word_graph, 100)
         )
 

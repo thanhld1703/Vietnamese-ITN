@@ -9,7 +9,7 @@ from pynini.lib import pynutil
 class ConsecutiveNumberFst(GraphFst):
     """
     Finite state transducer for classifying consecutive single digit number such as telephone number etc.
-        e.g một hai ba bốn -> consecutive { number: "01234" }
+        e.g không một hai ba bốn -> consecutive { number: "01234" }
     """
     def __init__(self):
         super().__init__(name="consecutive", kind="classify")

@@ -44,6 +44,7 @@ class CardinalFst(GraphFst):
         super().__init__(name="cardinal", kind="classify")
         graph_digit = pynini.string_file(get_abs_path("data/numbers/digit.tsv"))
         graph_digit_var = pynini.string_file(get_abs_path("data/numbers/digit_var.tsv"))
+
         graph_digit_any = graph_digit | graph_digit_var
         graph_digit_non_zero = graph_digit @ pynini.difference(NEMO_DIGIT, '0')
         graph_digit_any_non_zero = graph_digit_any @ pynini.difference(NEMO_DIGIT, '0')

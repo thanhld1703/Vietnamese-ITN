@@ -86,5 +86,6 @@ class ITNTest(unittest.TestCase):
         }
         for case in time.keys():
             self.assertEqual(inverse_normalize(case), time[case])
+
 if __name__ == "__main__":
 	unittest.main()

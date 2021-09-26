@@ -25,7 +25,7 @@ from nemo_text_processing.inverse_text_normalization.verbalizers.verbalize_final
 from nemo_text_processing.text_normalization.taggers.tokenize_and_classify import ClassifyFst as TNClassifyFst
 from nemo_text_processing.text_normalization.verbalizers.verbalize import VerbalizeFst as TNVerbalizeFst
 
-
+import argparse
 import pynini
 from pynini.export import export
 
@@ -88,7 +88,7 @@ def export_grammars(output_dir, grammars):
 
 
 def parse_args():
-    parser = ArgumentParser()
+    parser = argparse.ArgumentParser(description="Export normalization grammar")
     parser.add_argument("--output_dir", help="output directory for grammars", required=True, type=str)
     parser.add_argument(
         "--grammars", help="grammars to be exported", choices=["tn_grammars", "itn_grammars"], type=str, required=True
@@ -100,8 +100,8 @@ def parse_args():
 
 
 if __name__ == '__main__':
-    # args = parse_args()
-    output_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)) , "far")
+    args = parse_args()
+    output_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), args.output_dir)
     if os.path.isdir(output_dir):
         print("delete old far folder before exporting pls")
     else:

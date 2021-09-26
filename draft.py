@@ -7,6 +7,6 @@ from nemo_text_processing.inverse_text_normalization.taggers.decimal import Deci
 from nemo_text_processing.inverse_text_normalization.taggers.cardinal import CardinalFst
 from nemo_text_processing.inverse_text_normalization.inverse_normalize import InverseNormalizer
 
-# graph = DecimalFst(cardinal=CardinalFst()).fst
+graph = DecimalFst(cardinal=CardinalFst()).fst
 print(InverseNormalizer().inverse_normalize("không chấm hai mươi", verbose=True))
-# print(rewrites("không phẩy hai", graph))
+print(rewrites("không phẩy hai", graph))

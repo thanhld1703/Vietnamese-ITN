@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from nemo_text_processing.inverse_text_normalization.verbalizers.ambiguity import AmbiguityFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.cardinal import CardinalFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.fraction import FractionFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.date import DateFst
@@ -21,6 +21,7 @@ from nemo_text_processing.inverse_text_normalization.verbalizers.electronic impo
 from nemo_text_processing.inverse_text_normalization.verbalizers.measure import MeasureFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.money import MoneyFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.ordinal import OrdinalFst
+from nemo_text_processing.inverse_text_normalization.verbalizers.sequence import SequenceFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.telephone import TelephoneFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.time import TimeFst
 from nemo_text_processing.inverse_text_normalization.verbalizers.whitelist import WhiteListFst
@@ -39,6 +40,7 @@ class VerbalizeFst(GraphFst):
         super().__init__(name="verbalize", kind="verbalize")
         cardinal = CardinalFst()
         cardinal_graph = cardinal.fst
+        ambiguity_graph = AmbiguityFst().fst
         # ordinal_graph = OrdinalFst().fst
         decimal = DecimalFst()
         decimal_graph = decimal.fst
@@ -50,10 +52,12 @@ class VerbalizeFst(GraphFst):
         telephone_graph = TelephoneFst().fst
         electronic_graph = ElectronicFst().fst
         consec_num_graph = ConsecutiveNumberFst().fst
+        sequence_graph = SequenceFst().fst
         fraction_graph = FractionFst().fst
         
         graph = (
             cardinal_graph
+            | ambiguity_graph
             | date_graph
             | money_graph
             | measure_graph
@@ -64,6 +68,7 @@ class VerbalizeFst(GraphFst):
             | telephone_graph
             | electronic_graph
             | consec_num_graph
+            | sequence_graph
             | fraction_graph
         )
         self.fst = graph
