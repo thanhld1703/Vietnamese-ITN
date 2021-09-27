@@ -11,8 +11,8 @@ def parse_args():
 
 def inverse_normalize(s: str, verbose=False) -> str:
 	dir_path = os.path.dirname(os.path.realpath(__file__))
-	reader_classifier = pynini.Far(os.path.join(dir_path, "far/classify/tokenize_and_classify.far"))
-	reader_verbalizer = pynini.Far(os.path.join(dir_path, "far/verbalize/verbalize.far"))
+	reader_classifier = pynini.Far(os.path.join(dir_path, "far_v1.0/classify/tokenize_and_classify.far"))
+	reader_verbalizer = pynini.Far(os.path.join(dir_path, "far_v1.0/verbalize/verbalize.far"))
 	classifier = reader_classifier.get_fst()
 	verbalizer = reader_verbalizer.get_fst()
 	token = top_rewrite(s, classifier)

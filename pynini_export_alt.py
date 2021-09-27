@@ -21,6 +21,12 @@ from typing import Dict
 
 
 from nemo_text_processing.inverse_text_normalization.taggers.tokenize_and_classify import ClassifyFst as ITNClassifyFst
+from nemo_text_processing.inverse_text_normalization.taggers.cardinal import CardinalFst as CardinalITNClassifyFst
+from nemo_text_processing.inverse_text_normalization.taggers.decimal import DecimalFst as DecimalITNClassifyFst
+from nemo_text_processing.inverse_text_normalization.taggers.consec_num import ConsecutiveNumberFst as ConsecNumITNClassifyFst
+from nemo_text_processing.inverse_text_normalization.taggers.date import DateFst as DateITNClassifyFst
+from nemo_text_processing.inverse_text_normalization.taggers.sequence import SequenceFst as SequenceITNClassifyFst
+
 from nemo_text_processing.inverse_text_normalization.verbalizers.verbalize_final import VerbalizeFinalFst as ITNVerbalizeFst
 from nemo_text_processing.text_normalization.taggers.tokenize_and_classify import ClassifyFst as TNClassifyFst
 from nemo_text_processing.text_normalization.verbalizers.verbalize import VerbalizeFst as TNVerbalizeFst
@@ -33,7 +39,7 @@ from pynini.export import export
 
 
 # This script exports compiled grammars inside nemo_text_processing
-# into OpenFst finite state archive files tokenize_and_classify.far and verbalize.far
+# into OpenFst finite state archive files tokenize_and_classify.far_v1.0 and verbalize.far_v1.0
 # for production purposes
 
 
@@ -57,6 +63,12 @@ def _generator_main(file_name: str, graphs: Dict[str, pynini.FstLike]):
 def itn_grammars(**kwargs):
     d = {}
     d['classify'] = {'TOKENIZE_AND_CLASSIFY': ITNClassifyFst().fst}
+    d['cardinal_tagger'] = {'cardinal_tag': CardinalITNClassifyFst().fst}
+    d['decimal_tagger'] = {'decimal_tag': DecimalITNClassifyFst(CardinalITNClassifyFst()).fst}
+    d['date_tagger'] = {'date_tag': DateITNClassifyFst(CardinalITNClassifyFst(), ConsecNumITNClassifyFst()).fst}
+    d['consec_num_tagger'] = {'consec_num_tag': ConsecNumITNClassifyFst().fst}
+    d['sequence_tagger'] = {'sequence_tag': SequenceITNClassifyFst().fst}
+
     # d['verbalize'] = {'ALL': ITNVerbalizeFst().fst, 'REDUP': pynini.accep("REDUP")}
     d['verbalize'] = {'ALL': ITNVerbalizeFst().fst}
     return d

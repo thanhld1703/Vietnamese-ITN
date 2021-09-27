@@ -33,7 +33,7 @@ from pynini.export import export
 
 
 # This script exports compiled grammars inside nemo_text_processing
-# into OpenFst finite state archive files tokenize_and_classify.far and verbalize.far
+# into OpenFst finite state archive files tokenize_and_classify.far_v1.0 and verbalize.far_v1.0
 # for production purposes
 
 
@@ -101,8 +101,8 @@ def parse_args():
 
 if __name__ == '__main__':
     # args = parse_args()
-    output_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)) , "far")
+    output_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "far_v1.0")
     if os.path.isdir(output_dir):
-        print("delete old far folder before exporting pls")
+        print("delete old far_v1.0 folder before exporting pls")
     else:
         export_grammars(output_dir=output_dir, grammars=locals()["itn_grammars"](input_case="cased"))

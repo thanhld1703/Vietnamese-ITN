@@ -40,7 +40,7 @@ class CardinalFst(GraphFst):
     def __init__(self, deterministic: bool = True):
         super().__init__(name="cardinal", kind="classify", deterministic=deterministic)
 
-        graph = pynini.Far(get_abs_path("data/numbers/cardinal_number_name.far")).get_fst()
+        graph = pynini.Far(get_abs_path("data/numbers/cardinal_number_name.far_v1.0")).get_fst()
         self.graph_hundred_component_at_least_one_none_zero_digit = (
             pynini.closure(NEMO_DIGIT, 2, 3) | pynini.difference(NEMO_DIGIT, pynini.accep("0"))
         ) @ graph
