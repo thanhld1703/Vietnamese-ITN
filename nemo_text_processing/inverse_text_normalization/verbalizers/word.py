@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from nemo_text_processing.text_normalization.graph_utils import NEMO_CHAR, NEMO_SIGMA, GraphFst, delete_space_optional
+from nemo_text_processing.text_normalization.graph_utils import NEMO_CHAR, NEMO_GRAPH, NEMO_SIGMA, GraphFst, delete_space_optional
 
 try:
     import pynini
@@ -32,7 +32,7 @@ class WordFst(GraphFst):
 
     def __init__(self):
         super().__init__(name="word", kind="verbalize")
-        chars = pynini.closure(NEMO_CHAR - " ", 1)
+        chars = pynini.closure(NEMO_GRAPH - " ", 1)
         char = pynutil.delete("name:") + delete_space_optional + pynutil.delete("\"") + chars + pynutil.delete("\"")
         graph = char @ pynini.cdrewrite(pynini.cross(u"\u00A0", " "), "", "", NEMO_SIGMA)
 

@@ -1,5 +1,7 @@
 import unittest
-from inverse_normalize import inverse_normalize
+from inverse_normalize_beta import inverse_normalize
+
+
 class ITNTest(unittest.TestCase):
     def test_cardinal(self):
         cardinal = {
@@ -9,7 +11,7 @@ class ITNTest(unittest.TestCase):
             "một trăm": "100",
             "chín trăm chín chín nghìn tỷ tỷ": "999.000.000.000.000.000.000.000",
             "hai nghìn không trăm linh năm": "2.005"
-		}
+        }
         for case in cardinal.keys():
             self.assertEqual(inverse_normalize(case), cardinal[case])
 
@@ -23,7 +25,7 @@ class ITNTest(unittest.TestCase):
         }
         for case in date.keys():
             self.assertEqual(inverse_normalize(case), date[case])
-    
+
     def test_consec_num(self):
         consec_num = {
             "một hai": "12",
@@ -33,7 +35,7 @@ class ITNTest(unittest.TestCase):
         }
         for case in consec_num.keys():
             self.assertEqual(inverse_normalize(case), consec_num[case])
-    
+
     def test_decimal(self):
         decimal = {
             "không chấm hai mươi": "0.20",
@@ -45,7 +47,7 @@ class ITNTest(unittest.TestCase):
         }
         for case in decimal.keys():
             self.assertEqual(inverse_normalize(case), decimal[case])
-    
+
     def test_fraction(self):
         fraction = {
             "một phần hai": "1/2",
@@ -72,7 +74,7 @@ class ITNTest(unittest.TestCase):
         }
         for case in money.keys():
             self.assertEqual(inverse_normalize(case), money[case])
-    
+
     def test_time(self):
         time = {
             "một giờ": "1h",
@@ -87,5 +89,19 @@ class ITNTest(unittest.TestCase):
         for case in time.keys():
             self.assertEqual(inverse_normalize(case), time[case])
 
+
+    def test_context_coincide(self):
+        context = {
+            "năm hai nghìn linh năm "
+            "tỷ lệ lạm phát đạt mức mười hai phẩy năm phần trăm "
+            "ba năm hai nghìn mười sáu hai nghìn mười ba và hai nghìn mười bốn "
+            "tỷ lệ lạm phát không đổi là mười hai phẩy mười hai phần trăm"
+            : "năm 2005 tỷ lệ lạm phát đạt mức 12,5 % 3 năm 2.016 2.013 và 2.014 tỷ lệ lạm phát không đổi là 12,12 %",
+        }
+        for case in context.keys():
+            self.assertEqual(inverse_normalize(case), context[case])
+
+
 if __name__ == "__main__":
-	unittest.main()
+    unittest.main()
+

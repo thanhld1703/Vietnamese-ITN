@@ -84,7 +84,7 @@ class ClassifyFst(GraphFst):
             | pynutil.add_weight(time_graph, 1.1)
             | pynutil.add_weight(date_graph, 1.09)
             | pynutil.add_weight(decimal_graph, 1.1)
-            | pynutil.add_weight(measure_graph, 1.12)
+            | pynutil.add_weight(measure_graph, 1.101)
             | pynutil.add_weight(cardinal_graph, 1.1)
         #     | pynutil.add_weight(ordinal_graph, 1.1)
             | pynutil.add_weight(money_graph, 1.1)
@@ -93,15 +93,16 @@ class ClassifyFst(GraphFst):
             | pynutil.add_weight(consec_num_graph, 1.11)
             | pynutil.add_weight(sequence_graph, 1.11)
             | pynutil.add_weight(word_graph, 100)
+            | pynutil.add_weight(punct_graph, weight=1.1)
         )
 
-        punct = pynutil.insert("tokens { ") + pynutil.add_weight(punct_graph, weight=1.1) + pynutil.insert(" }")
+        # punct = pynutil.insert("tokens { ") + pynutil.add_weight(punct_graph, weight=1.1) + pynutil.insert(" }")
         token = pynutil.insert("tokens { ") + classify + pynutil.insert(" }")
-        token_plus_punct = (
-            pynini.closure(punct + pynutil.insert(" ")) + token + pynini.closure(pynutil.insert(" ") + punct)
-        )
+        # token_plus_punct = (
+        #     pynini.closure(punct + pynutil.insert(" ")) + token + pynini.closure(pynutil.insert(" ") + punct)
+        # )
 
-        graph = token_plus_punct + pynini.closure(delete_extra_space + token_plus_punct)
+        graph = token + pynini.closure(delete_extra_space + token)
         graph = delete_space_optional + graph + delete_space_optional
 
 
