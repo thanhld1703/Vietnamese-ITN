@@ -20,9 +20,6 @@ def parse_args():
 
 def inverse_normalize(s: str, tag='ALL', verbose=False) -> str:
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    # reader_classifier = pynini.Far(os.path.join(dir_path, "../asr-post-processing/far/classify/tokenize_and_classify.far"))
-    # reader_verbalizer = pynini.Far(os.path.join(dir_path, "../asr-post-processing/far/verbalize/verbalize.far"))
-
     reader_classifier = pynini.Far(os.path.join(dir_path, "./far_beta/classify/tokenize_and_classify.far"))
     reader_verbalizer = pynini.Far(os.path.join(dir_path, "./far_beta/verbalize/verbalize.far"))
 

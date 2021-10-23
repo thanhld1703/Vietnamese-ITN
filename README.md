@@ -9,13 +9,11 @@ conda install -c conda-forge -y pynini=2.1.4
 Usage: 
 ``` python
 python inverse_normalize_beta.py "một hai ba"
-```
-
-```python
-python inverse_normalize_beta.py
+python inverse_normalize_beta.py "năm hai nghìn linh năm tỷ lệ lạm phát đạt mức mười hai phẩy năm phần trăm ba năm hai nghìn mười sáu hai nghìn mười ba và hai nghìn mười bốn tỷ lệ lạm phát không đổi là mười hai phẩy mười hai phần trăm"
 ```
 
 ## For developer
 ### Export
-- Refer to `python pynini_export_beta.py --help`
-
+- Refer to this [script](./export.sh).
+### Tutorials
+- Refer to this [link](http://wellformedness.com/courses/pynini/) or this [notebook](./algorithms.ipynb) for briefs.

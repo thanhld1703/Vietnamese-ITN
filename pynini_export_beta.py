@@ -16,7 +16,7 @@
 
 import os
 import time
-import sys
+import argparse
 import shutil
 from typing import Dict
 
@@ -34,7 +34,7 @@ from nemo_text_processing.inverse_text_normalization.verbalizers.verbalize_final
 from nemo_text_processing.text_normalization.taggers.tokenize_and_classify import ClassifyFst as TNClassifyFst
 from nemo_text_processing.text_normalization.verbalizers.verbalize import VerbalizeFst as TNVerbalizeFst
 
-import argparse
+
 import pynini
 from pynini.export import export
 
