@@ -1,14 +1,17 @@
 # Vietnamese-ITN
-Convert vietnamese words in spoken form to written form, e.g `một phẩy hai mét -> 1,2 m`
+Convert Vietnamese words in spoken form to written form, e.g `một phẩy hai mét -> 1,2 m`
+Extended from Opensource NEMO Text Processing
 
 Install dependency: 
-```
+```bash
 conda install -c conda-forge -y pynini=2.1.4
 ```
 
 Usage: 
-``` python
+```python
 python inverse_normalize_beta.py "một hai ba"
+python inverse_normalize_beta.py --tag sequence "ba năm"
+python inverse_normalize_beta.py --tag consecnum "ba năm"
 python inverse_normalize_beta.py "năm hai nghìn linh năm tỷ lệ lạm phát đạt mức mười hai phẩy năm phần trăm ba năm hai nghìn mười sáu hai nghìn mười ba và hai nghìn mười bốn tỷ lệ lạm phát không đổi là mười hai phẩy mười hai phần trăm"
 ```
 
